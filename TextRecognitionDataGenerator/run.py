@@ -55,7 +55,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="The number of images to be created.",
-        default=1000
+        default=100
     )
     parser.add_argument(
         "-rs",
@@ -112,7 +112,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define how many words should be included in each generated sample. If the text source is Wikipedia, this is the MINIMUM length",
-        default=1
+        default=10
     )
     parser.add_argument(
         "-r",
@@ -135,7 +135,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define the number of thread to use for image generation",
-        default=1,
+        default=4,
     )
     parser.add_argument(
         "-e",
@@ -363,7 +363,7 @@ def check_character_in_fontc1(char, font, height = 32):
 
 def random_latin(fonts):
     strings = []
-    latin_chars = [x[:-1] for x in open("dicts/latin.txt", encoding="utf-8").readlines()]
+    latin_chars = [x[:-1] for x in open("dicts/vn_char.txt", encoding="utf-8").readlines()]
     special_chars = [x[:-1] for x in open("dicts/special_char.txt", encoding="utf-8").readlines()][:-3]
     max_length = 60
 
