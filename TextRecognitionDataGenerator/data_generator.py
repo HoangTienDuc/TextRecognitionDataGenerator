@@ -220,4 +220,8 @@ class FakeTextDataGenerator(object):
 
 
             # Save the image
-            final_image.convert('RGB').save(os.path.join(out_dir, image_name))
+            
+            rd = random.randint(1000000, 10000000000)
+            final_image.convert('RGB').save(os.path.join(out_dir, str(rd) + ".jpg"))
+            with open(os.path.join(out_dir, str(rd) + ".txt"), "a", encoding="utf-8") as saver:
+                saver.write(text)

@@ -112,7 +112,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define how many words should be included in each generated sample. If the text source is Wikipedia, this is the MINIMUM length",
-        default=10
+        default=16
     )
     parser.add_argument(
         "-r",
@@ -260,6 +260,7 @@ def create_strings_from_file(filename, count):
 
     with open(filename, 'r', encoding="utf8") as f:
         lines = [l.strip()[0:200] for l in f.readlines()]
+        print("len(lines): ", len(lines))
         if len(lines) == 0:
             raise Exception("No lines could be read in file")
         while len(strings) < count:
@@ -275,6 +276,7 @@ def create_strings_from_dict(length, allow_variable, count, lang_dict):
         Create all strings by picking X random word in the dictionnary
     """
 
+    print("aaaaaaaaaaaaaaaaaaaaaaa")
     dict_len = len(lang_dict)
     strings = []
     for _ in range(0, count):
@@ -554,24 +556,8 @@ def main():
 
     fonts_arr = [fonts[random.randrange(0, len(fonts))] for _ in range(0, args.count)]
 
-    if args.use_wikipedia:
-        strings = create_strings_from_wikipedia(args.length, args.count, args.language)
-    elif args.input_file != '':
-        strings = create_strings_from_file(args.input_file, args.count)
-    elif args.random_sequences:
-        strings = create_strings_randomly(args.length, args.random, args.count,
-                                          args.include_letters, args.include_numbers, args.include_symbols, args.language)
-        # Set a name format compatible with special characters automatically if they are used
-        if args.include_symbols or True not in (args.include_letters, args.include_numbers, args.include_symbols):
-            args.name_format = 2
-    elif args.random_sequences_from_font:
-        strings = create_strings_from_fonts(fonts_arr)
-    elif args.random_sequences_sjnk:
-        fonts_arr, strings = random_sequences_sjnk(fonts_arr)
-    elif args.random_latin_sjnk:
-        fonts_arr, strings = random_latin(fonts_arr)
-    else:
-        strings = create_strings_from_dict(args.length, args.random, args.count, lang_dict)
+    # input_file = "./dicts/docs.txt"
+    strings = create_strings_from_file(args.input_file, args.count)
 
 
     string_count = len(strings)
